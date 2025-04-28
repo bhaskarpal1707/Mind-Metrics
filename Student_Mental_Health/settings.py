@@ -22,13 +22,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = "django-insecure-ar-hbuc5x)7yqd5fou09a1n6768+40qkt&qsgxpo$_pb*&r_t6"
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = "django-insecure-ar-hbuc5x)7yqd5fou09a1n6768+40qkt&qsgxpo$_pb*&r_t6"
+# SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", "False") == "true"
+DEBUG = os.environ.get("DEBUG", "False") == "True"
+# DEBUG= 'True'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
+# ALLOWED_HOSTS = []
+
 
 
 # Application definition
@@ -86,10 +89,9 @@ DATABASES = {
 
 database_url = os.environ.get("DATABASE_URL")
 
-# DATABASES["default"]= dj_database_url.parse("postgresql://mindmetrics_django_user:aU2Z3ws1pYJUpuGaFzqRyJRFXumK5iY6@dpg-d07j8d9r0fns738kbmt0-a.oregon-postgres.render.com/mindmetrics_django")
+# DATABASES["default"]= dj_database_url.parse("postgresql://student_mental_health_3imn_user:O4YlOFCwlPP0ARyCLNEwvVuat7CHPJpk@dpg-d07jd849c44c73a1lsng-a.oregon-postgres.render.com/student_mental_health_3imn")
 
 DATABASES["default"]= dj_database_url.parse(database_url)
-# postgresql://mindmetrics_django_user:aU2Z3ws1pYJUpuGaFzqRyJRFXumK5iY6@dpg-d07j8d9r0fns738kbmt0-a.oregon-postgres.render.com/mindmetrics_django
 
 
 
@@ -128,7 +130,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/' # below this add the following line
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'userApp/static')]
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
