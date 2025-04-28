@@ -90,7 +90,7 @@ DATABASES = {
 
 database_url = os.environ.get("DATABASE_URL")
 
-# DATABASES["default"]= dj_database_url.parse("postgresql://student_mental_health_3imn_user:O4YlOFCwlPP0ARyCLNEwvVuat7CHPJpk@dpg-d07jd849c44c73a1lsng-a.oregon-postgres.render.com/student_mental_health_3imn")
+
 
 DATABASES["default"]= dj_database_url.parse(database_url)
 
@@ -134,8 +134,8 @@ USE_TZ = True
 
 
 
-STATIC_URL = '/static/' # below this add the following line
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_URL = 'static/' # below this add the following line
+STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
