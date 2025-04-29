@@ -1,92 +1,70 @@
-{% comment %} {% include 'navbar.html' %}
 {% load static %}
-
-{% block content %}
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="feature-card p-4">
-                <h2 class="mb-4"><i class="bi bi-gear-wide-connected me-2"></i>Account Settings</h2>
-                
-                <!-- Profile Update Form -->
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    
-                    <!-- Profile Picture Section -->
-                    <div class="mb-4 text-center">
-                        <div class="mb-3">
-                            <img src="{% if user.profile.image %}{{ user.profile.image.url }}{% else %}{% static 'images/default-avatar.png' %}{% endif %}" 
-                                 class="rounded-circle shadow wellness-image" 
-                                 alt="Current Profile" 
-                                 style="width: 120px; height: 120px; object-fit: cover;">
-                        </div>
-                        <div class="form-group">
-                            {{ form.image.label_tag }}
-                            <input type="file" name="image" 
-                                   class="form-control" 
-                                   accept="image/*"
-                                   id="id_image">
-                        </div>
-                    </div>
-
-                    <!-- Bio Section -->
-                    <div class="mb-4">
-                        <label class="form-label">Bio</label>
-                        {{ form.bio }}
-                    </div>
-
-                    <!-- Location Section -->
-                    <div class="mb-4">
-                        <label class="form-label">Location</label>
-                        {{ form.location }}
-                    </div>
-
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn assessment-btn text-white rounded-pill">
-                            <i class="bi bi-save me-2"></i>Save Changes
-                        </button>
-                        <a href="{% url 'profile' %}" class="btn btn-outline-secondary rounded-pill">
-                            Cancel
-                        </a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock %} {% endcomment %}
-
-
-
 {% include 'navbar.html' %}
-{% load static %}
 
-{% block content %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+    body {
+        background: linear-gradient(to bottom right, #ffffff, rgb(189, 217, 245));
+    }
+    
+
+    .back-icon-btn {
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: #e9ecef;
+        transition: background-color 0.3s ease;
+    }
+
+    .back-icon-btn:hover {
+        background-color: #ced4da;
+    }
+
+    .settings-header {
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: #212529;
+    }
+</style>
+
 <div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="feature-card p-4">
-                <h2 class="mb-4"><i class="bi bi-gear-wide-connected me-2"></i>Account Settings</h2>
+        <div class="col-12 col-md-10 col-lg-8">
+            <div class="feature-card p-4 mx-auto bg-white shadow-sm rounded-4" style="max-width: 600px;">
                 
+                <!-- Modernized Header -->
+                <div class="d-flex align-items-center gap-3 mb-4">
+                    <a href="{% url 'profile' %}" class="back-icon-btn text-dark text-decoration-none">
+                        <i class="bi bi-arrow-left"></i>
+                    </a>
+                    <div class="settings-header d-flex align-items-center">
+                        <i class="bi bi-gear-wide-connected me-2">
+                        <span>Account Settings : </i></span>
+                    </div>
+                </div>
+
                 <!-- Profile Update Form -->
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    
+
                     <!-- Profile Picture Section -->
                     <div class="mb-4 text-center">
                         <div class="mb-3">
                             <img id="previewImage" 
                                  src="{% if user.profile.image %}{{ user.profile.image.url }}{% else %}{% static 'images/default-avatar.png' %}{% endif %}" 
-                                 class="rounded-circle shadow wellness-image" 
+                                 class="rounded-circle shadow" 
                                  alt="Current Profile" 
                                  style="width: 120px; height: 120px; object-fit: cover;">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group w-100">
                             <label class="form-label">Profile Picture</label>
                             <div class="custom-file">
-                                {{ profile_form.image }}  <!-- Changed from form.image to profile_form.image -->
+                                {{ profile_form.image }}
                                 {% if profile_form.image.errors %}
                                     <div class="text-danger mt-2">
                                         {% for error in profile_form.image.errors %}
@@ -97,27 +75,25 @@
                             </div>
                         </div>
                     </div>
-                
+
                     <!-- Bio Section -->
                     <div class="mb-4">
                         <label class="form-label">Bio</label>
-                        {{ profile_form.bio }}  <!-- Changed to profile_form.bio -->
+                        {{ profile_form.bio }}
                     </div>
-                
+
                     <!-- Location Section -->
                     <div class="mb-4">
                         <label class="form-label">Location</label>
-                        {{ profile_form.location }}  <!-- Changed to profile_form.location -->
+                        {{ profile_form.location }}
                     </div>
-                
+
+                    <!-- Buttons -->
                     <div class="d-grid gap-2">
-                        {% comment %} <button type="submit" name="update_profile" class="btn assessment-btn text-white rounded-pill">
+                        <button type="submit" name="update_profile" class="btn btn-outline-primary rounded-pill w-100">
                             <i class="bi bi-save me-2"></i>Save Changes
-                        </button> {% endcomment %}
-                        <button type="submit" name="update_profile" class="btn btn-outline-primary rounded-pill">
-                             <i class="bi bi-save me-2"></i>Save Changes
                         </button>
-                        <a href="{% url 'profile' %}" class="btn btn-outline-secondary rounded-pill">
+                        <a href="{% url 'profile' %}" class="btn btn-outline-secondary rounded-pill w-100">
                             Cancel
                         </a>
                     </div>
@@ -127,12 +103,11 @@
     </div>
 </div>
 
-
 <script>
 document.getElementById('id_image').addEventListener('change', function(e) {
     const previewImage = document.getElementById('previewImage');
     const file = e.target.files[0];
-    
+
     if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
@@ -145,5 +120,4 @@ document.getElementById('id_image').addEventListener('change', function(e) {
 });
 </script>
 
-{% endblock %}
-
+{% include 'footer.html' %}

@@ -40,7 +40,7 @@ class MentalHealthForm(forms.Form):
         widget=forms.Select(attrs={'class': 'form-select'}))
     
     cgpa = forms.DecimalField(
-        label='CGPA',
+        label='CGPA/GPA',
         max_digits=3,
         decimal_places=2,
         widget=forms.NumberInput(attrs={
@@ -244,6 +244,9 @@ class UserUpdateForm(forms.ModelForm):
                 'placeholder': 'Last Name'
             }),
         }
+
+
+        
 class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField()
     first_name = forms.CharField(max_length=30, required=True)
@@ -287,7 +290,7 @@ class ContactForm(forms.Form):
         max_length=15,
         validators=[RegexValidator(
             regex=r'^\+?1?\d{9,15}$',
-            message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed."
+            message="Phone number must be entered in the format: '+999999999'. Up to 12 digits allowed."
         )],
         widget=forms.TextInput(attrs={
             'class': 'form-control',
@@ -304,3 +307,4 @@ class ContactForm(forms.Form):
             'required': 'required'
         })
     )
+

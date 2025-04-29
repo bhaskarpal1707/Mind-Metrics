@@ -323,9 +323,9 @@
                     <h2 class="fw-bold mb-4 display-6">Take Control of Your Mental Wellbeing Today</h2>
                     <p class="mb-4 lead">Join thousands who've gained clarity through our assessment</p>
                     <button class="btn assessment-btn text-white rounded-pill" 
-                    {% if not user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#loginModal"
+                    {% if not user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#loginRequiredModal"
                     {% else %}data-bs-toggle="modal" data-bs-target="#assessmentModal"{% endif %}>
-                        Start Your Assessment Now
+                        Start Assessment Now
                     </button>
                 </div>
             </div>
@@ -348,8 +348,7 @@
         </div>
     </div>
 
-  <!-- Stylish Login Required Modal -->
-    <!-- Refined Login Required Modal -->
+    <!-- Login Required Modal -->
     <div class="modal fade" id="loginRequiredModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content overflow-hidden border-0" style="
