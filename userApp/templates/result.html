@@ -519,24 +519,108 @@
         .btn {
           width: 100%;
           max-width: 300px;
+          margin-bottom: 0.5rem;
+        }
+        
+        .progress-container h2 {
+          font-size: 1.5rem;
+        }
+        
+        .metric-card h1 {
+          font-size: 2rem;
+        }
+        
+        .insights-tabs {
+          overflow-x: auto;
+          white-space: nowrap;
+          padding-bottom: 0.5rem;
+        }
+        
+        .insights-tab {
+          padding: 0.5rem 1rem;
+          font-size: 0.9rem;
         }
       }
 
       @media (max-width: 768px) {
-        .progress-container h2 {
-          font-size: 1.5rem;
+        body {
+          padding-top: 70px;
         }
+        
+        .progress-container {
+          padding: 1.5rem;
+        }
+        
+        .metric-card {
+          padding: 1rem;
+        }
+        
+        .chart-title {
+          font-size: 1rem;
+        }
+        
+        .chart-container {
+          min-height: 250px;
+        }
+        
+        .recommendation-item {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        
+        .recommendation-icon {
+          margin-bottom: 0.5rem;
+        }
+        
+        .factor-card {
+          padding: 0.75rem;
+        }
+        
+        .factor-title {
+          font-size: 0.9rem;
+        }
+      }
 
+      @media (max-width: 576px) {
+        .progress-container h2 {
+          font-size: 1.3rem;
+        }
+        
+        .metric-card h3 {
+          font-size: 1.1rem;
+        }
+        
         .metric-card h1 {
-          font-size: 2.5rem;
+          font-size: 1.8rem;
+        }
+        
+        .chart-card {
+          padding: 1rem;
+        }
+        
+        .insight-column {
+          padding: 1rem;
+        }
+        
+        .action-buttons .btn {
+          padding: 0.5rem 1rem;
+          font-size: 0.9rem;
+        }
+        
+        /* Adjust chart sizes for very small screens */
+        .chart-container {
+          min-height: 200px;
+        }
+        
+        /* Make sure radar chart stays visible */
+        #radarChart {
+          max-height: 250px;
         }
       }
     </style>
-    
   </head>
   <body>
     <div class="container">
-
       <!-- Header Section Banner-->
       <div class="progress-container">
         <h2 class="text-center mb-4">
@@ -560,7 +644,7 @@
             <span class="badge bg-danger">{{ insights.stress.level }}</span>
             <div class="mt-2">
               <small class="text-muted"
-                >Thresholds: Low < 2, Moderate < 4, High ≥ 4</small
+                >Thresholds: Low ≤ 2, Moderate < 3.5, High ≥ 3.5</small
               >
             </div>
           </div>
@@ -570,7 +654,7 @@
             <div class="metric-icon text-warning">
               <i class="fas fa-cloud"></i>
             </div>
-            <h3>Depression Score</h3>
+            <h3>Depression Level</span></h3>
             <h1 class="display-4">
               {{ insights.depression.score|floatformat:1 }}
             </h1>
@@ -579,7 +663,7 @@
             >
             <div class="mt-2">
               <small class="text-muted"
-                >Thresholds: Low < 2, Moderate < 4, High ≥ 4</small
+                >Thresholds: Low ≤ 2, Moderate < 3.5, High ≥ 3.5</small
               >
             </div>
           </div>
@@ -589,24 +673,22 @@
             <div class="metric-icon text-success">
               <i class="fas fa-wind"></i>
             </div>
-            <h3>Anxiety Score</h3>
+            <h3>Anxiety Score</span></h3>
             <h1 class="display-4">
               {{ insights.anxiety.score|floatformat:1 }}
             </h1>
             <span class="badge bg-success">{{ insights.anxiety.level }}</span>
             <div class="mt-2">
               <small class="text-muted"
-                >Thresholds: Low < 2, Moderate < 4, High ≥ 4</small
+                >Thresholds: Low ≤ 2, Moderate < 3.5, High ≥ 3.5</small
               >
             </div>
           </div>
         </div>
       </div>
 
-
       <!-- Chart Boards Grid -->
       <div class="dashboard-grid">
-        
         <!-- Radar Chart -->
         <div class="chart-card">
           <h5 class="chart-title">
@@ -646,10 +728,7 @@
             <canvas id="symptomFrequencyChart"></canvas>
           </div>
         </div>
-
       </div>
-
-      
 
       <!-- Different Factor Analysis Banner -->
       <div style="
@@ -809,23 +888,9 @@
           </div>
         </div>
       </div>
-
-
-      <!-- Reccomendation Banner -->
-      <div style="
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        padding: 1rem 2rem; 
-        border-radius: 12px; 
-        margin-bottom: 1.5rem; 
-        text-align: center;
-        color: white;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        ">
-        <h2 style="margin: 0; font-size: 1.75rem;">🚀 Future Reccomendations 🚀</h2>
-      </div>
-
-      <!-- Reccomendation Section -->
-      <div class="dashboard-grid" >
+      
+      <!-- Recommendation Sections -->
+      <div class="dashboard-grid">
         <div class="chart-card full-width" style="margin-bottom: 2rem;">
           <div class="row g-4">
             <div class="col-lg-4">
@@ -834,8 +899,8 @@
                   <i class="fas fa-fire"></i> Stress Management
                 </h5>
                 {% for recommendation in insights.stress.recommendations %}
-                <div class="recommendation-item">
-                  <i class="fas fa-circle small"></i>
+                <div class="recommendation-item" style="display: flex; align-items: flex-start;">
+                  <i class="fas fa-circle small" style="margin-right: 0.5rem; margin-top: 0.25rem;"></i>
                   <div>{{ recommendation }}</div>
                 </div>
                 {% endfor %}
@@ -848,8 +913,8 @@
                   <i class="fas fa-cloud"></i> Depression Support
                 </h5>
                 {% for recommendation in insights.depression.recommendations %}
-                <div class="recommendation-item">
-                  <i class="fas fa-circle small"></i>
+                <div class="recommendation-item" style="display: flex; align-items: flex-start;">
+                  <i class="fas fa-circle small" style="margin-right: 0.5rem; margin-top: 0.25rem;"></i>
                   <div>{{ recommendation }}</div>
                 </div>
                 {% endfor %}
@@ -862,8 +927,8 @@
                   <i class="fas fa-wind"></i> Anxiety Reduction
                 </h5>
                 {% for recommendation in insights.anxiety.recommendations %}
-                <div class="recommendation-item">
-                  <i class="fas fa-circle small"></i>
+                <div class="recommendation-item" style="display: flex; align-items: flex-start;">
+                  <i class="fas fa-circle small" style="margin-right: 0.5rem; margin-top: 0.25rem;"></i>
                   <div>{{ recommendation }}</div>
                 </div>
                 {% endfor %}
@@ -872,7 +937,6 @@
           </div>
         </div>
       </div>
-
 
       <!-- Detailed Analysis Banner -->
       <div style="
@@ -901,7 +965,6 @@
         </div>
       </div> 
 
-
       <!-- Action Buttons -->
       <div class="action-buttons">
         <a href="{% url 'home' %}" class="btn btn-primary px-5 py-3">
@@ -912,7 +975,6 @@
         </a>
       </div>
     </div>
-
 
     <script>
       // Radar Chart
@@ -1012,7 +1074,7 @@
             },
             {
               label: 'Average',
-              data: [3.2, 2.8, 2.4],
+              data: [2.2, 1.8, 2.0],
               backgroundColor: 'rgba(124, 58, 237, 0.2)',
               borderColor: '#7c3aed',
               borderWidth: 1,
@@ -1248,6 +1310,28 @@
           }
         });
       });
+
+      // Handle chart resizing on mobile
+      function handleResize() {
+        const charts = [
+          document.getElementById('radarChart'),
+          document.getElementById('comparisonChart'),
+          document.getElementById('symptomChart'),
+          document.getElementById('symptomFrequencyChart')
+        ];
+        
+        charts.forEach(chart => {
+          if (chart && chart.chart) {
+            chart.chart.resize();
+          }
+        });
+      }
+      
+      // Initial resize
+      handleResize();
+      
+      // Add resize event listener
+      window.addEventListener('resize', handleResize);
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
