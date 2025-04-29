@@ -127,42 +127,41 @@
               class="d-flex align-items-center gap-3"
               data-bs-toggle="dropdown"
             >
+            <span class="d-none d-lg-inline">Welcome! {{ user.username }}</span>
               <img
                 src="{% if user.profile.image %}{{ user.profile.image.url }}{% else %}{% static 'images/default-avatar.png' %}{% endif %}"
                 class="profile-picture rounded-circle shadow-sm"
                 alt="Profile"
                 style="width: 42px; height: 42px; object-fit: cover"
               />
-              <span class="d-none d-lg-inline">Welcome {{ user.username }}</span>
+             
             </div>
-            <ul class="dropdown-menu dropdown-menu-end border-0 mt-2 shadow-lg" style="right: auto;">
-              <li>
-                <a
-                  class="dropdown-item d-flex align-items-center gap-2"
-                  href="{% url 'profile' %}"
-                >
-                  <i class="bi bi-person fs-5"></i>
-                  <span>Profile</span>
+            <!-- Google-style Desktop Dropdown on click profile pic-->
+            <div class="dropdown-menu border-0 shadow-lg p-0 overflow-hidden" style="position: absolute; top: 100%; margin-top:0.5rem; right:0; margin-right:5rem; width: 320px; z-index: 1050;">
+              <div class="google-profile-header p-4 text-center bg-white">
+                <img
+                  src="{% if user.profile.image %}{{ user.profile.image.url }}{% else %}{% static 'images/default-avatar.png' %}{% endif %}"
+                  class="google-profile-picture rounded-circle mb-2"
+                  alt="Profile"
+                  style="width: 60px; height: 60px; object-fit: cover;"
+                />
+                <h6 class="mb-2 fw-bold">Hi, {{ user.username }}!</h6>
+                <a href="{% url 'profile' %}" class="btn btn-outline-primary rounded-pill btn-sm fw-medium w-100">
+                  Manage your account
                 </a>
-              </li>
-              <li>
-                <a
-                  class="dropdown-item d-flex align-items-center gap-2"
-                  href="{% url 'settings' %}"
-                >
-                  <i class="bi bi-gear fs-5"></i>
-                  <span>Settings</span>
-                </a>
-              </li>
-              <li><hr class="dropdown-divider mx-3 my-2" /></li>
-              <form method="post" action="{% url 'logout' %}">
-                {% csrf_token %}
-                <button type="submit" class="dropdown-item text-danger d-flex align-items-center gap-2">
-                  <i class="bi bi-box-arrow-right fs-5"></i>
-                  <span>Logout</span>
-                </button>
-              </form>
-            </ul>
+              </div>
+            
+              <!-- Sign Out Button -->
+              <div class="p-3 bg-light border-top">
+                <form method="post" action="{% url 'logout' %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger w-100 rounded-pill d-flex align-items-center justify-content-center gap-2">
+                    <i class="bi bi-box-arrow-right"></i> Sign out
+                  </button>
+                </form>
+              </div>
+            </div>
+            
           </div>
           {% else %}
           <div class="d-flex align-items-center gap-2">

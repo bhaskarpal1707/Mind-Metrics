@@ -131,9 +131,9 @@ def preprocess_user_data(user_data):
 def generate_user_insights(user_data, model):
     predictions = model.predict(user_data)
 
-    stress_thresholds = [2, 4]
-    depression_thresholds = [2, 4]
-    anxiety_thresholds = [2, 4]
+    stress_thresholds = [2, 3.5]
+    depression_thresholds = [2, 3.5]
+    anxiety_thresholds = [2, 3.5]
 
     stress_level = "Low" if predictions[0][0] < stress_thresholds[0] else \
                   "Moderate" if predictions[0][0] < stress_thresholds[1] else "High"
@@ -147,58 +147,70 @@ def generate_user_insights(user_data, model):
     def get_stress_recommendations(stress_level, user_data):
         if stress_level == "High":
             return [
-                "Practice mindfulness and relaxation techniques.",
-                "Consider seeking professional help.",
-                "Prioritize sleep and healthy eating."
+                "Practice mindfulness and relaxation techniques",
+                "Consider seeking professional help",
+                "Prioritize sleep and healthy eating",
+                "Take regular breaks during work/study (5 min every hour)"
             ]
         elif stress_level == "Moderate":
             return [
-                "Engage in regular physical activity.",
-                "Connect with friends and family.",
-                "Take breaks and practice time management."
+                "Maintain a healthy lifestyle with balanced diet and regular exercise",
+                "Practice daily mindfulness or meditation (10-15 minutes)",
+                "Establish a consistent sleep schedule (7-9 hours)",
+                "Connect with friends and family"
             ]
         else:
             return [
-                "Maintain a healthy lifestyle.",
-                "Continue with stress-reducing activities."
+                "Continue with stress-reducing activities",
+                "Practice gratitude journaling (3 things daily)",
+                "Engage in regular physical activity",
+                "Maintain work-life balance"
             ]
 
     def get_depression_recommendations(depression_level, user_data):
         if depression_level == "High":
             return [
-                "Seek professional help immediately.",
-                "Prioritize sleep and healthy eating.",
-                "Engage in activities you enjoy."
+                "Seek professional help immediately",
+                "Prioritize sleep and healthy eating",
+                "Engage in activities you enjoy",
+                "Connect with support groups or trusted friends"
             ]
         elif depression_level == "Moderate":
             return [
-                "Consider talking to a therapist.",
-                "Practice self-care activities.",
-                "Connect with support groups."
+                "Consider talking to a therapist or counselor",
+                "Establish a daily routine with achievable goals",
+                "Practice self-care activities",
+                "Try progressive muscle relaxation techniques"
             ]
         else:
             return [
-                "Maintain a positive outlook.",
-                "Continue with activities that promote mental well-being."
+                "Maintain a positive outlook",
+                "Continue with activities that promote mental well-being",
+                "Practice gratitude journaling (3 things daily)",
+                "Engage in social activities"
             ]
 
     def get_anxiety_recommendations(anxiety_level, user_data):
         if anxiety_level == "High":
             return [
-                "Consult with a mental health professional.",
-                "Practice deep breathing exercises.",
-                "Limit caffeine and alcohol intake."
+                "Consult with a mental health professional",
+                "Practice deep breathing exercises (4-7-8 technique)",
+                "Limit caffeine and alcohol intake",
+                "Establish a worry time (15-20 minutes scheduled)"
             ]
         elif anxiety_level == "Moderate":
             return [
-                "Engage in relaxation techniques.",
-                "Challenge negative thoughts.",
-                "Consider joining a support group."
+                "Engage in relaxation techniques",
+                "Challenge negative thoughts",
+                "Consider joining a support group",
+                "Try progressive muscle relaxation techniques"
             ]
         else:
             return [
-                "Maintain a healthy lifestyle.",
-                "Continue with anxiety-reducing practices."
+                "Maintain a healthy lifestyle",
+                "Continue with anxiety-reducing practices",
+                "Practice mindfulness exercises",
+                "Establish a consistent daily routine"
             ]
 
     insights = {
@@ -221,6 +233,7 @@ def generate_user_insights(user_data, model):
 
     return insights
 
+
 def generate_explanation(prediction):
     try:
         stress, depression, anxiety = prediction[0]
@@ -228,30 +241,48 @@ def generate_explanation(prediction):
 
         if stress >= 4:
             explanations.append("High stress level detected - consider stress management techniques such as mindfulness, exercise, or counseling.")
+            explanations.append("Chronic high stress can impact physical health - monitor blood pressure and sleep patterns regularly.")
+            explanations.append("Consider identifying specific stress triggers through journaling to better manage them.")
         elif stress >= 2:
             explanations.append("Moderate stress level - monitor your stress regularly and try healthy coping mechanisms.")
+            explanations.append("Even moderate stress can accumulate - schedule regular relaxation breaks throughout your day.")
+            explanations.append("Physical activity like walking or yoga can help moderate stress levels effectively.")
         else:
             explanations.append("Your stress level appears within the normal range.")
+            explanations.append("Maintaining healthy habits will help keep your stress levels in check.")
+            explanations.append("Regular self-check-ins can help detect early signs of increasing stress.")
 
         if depression >= 4:
             explanations.append("High depression score - seeking support from a mental health professional is recommended.")
+            explanations.append("Persistent depression may affect daily functioning - consider reaching out to support networks.")
+            explanations.append("Small, manageable goals can help create positive momentum when dealing with depression.")
         elif depression >= 2:
             explanations.append("Moderate depression score - be aware of changes in mood and talk to someone you trust.")
+            explanations.append("Maintaining social connections can help prevent moderate depression from worsening.")
+            explanations.append("Morning sunlight exposure and regular sleep patterns may help improve mood.")
         else:
             explanations.append("Your depression score appears within the normal range.")
+            explanations.append("Continuing to engage in meaningful activities supports mental wellbeing.")
+            explanations.append("Regular mood check-ins can help maintain emotional balance.")
 
         if anxiety >= 4:
             explanations.append("High anxiety score - relaxation techniques or speaking to a counselor may help.")
+            explanations.append("For acute anxiety, grounding techniques like 5-4-3-2-1 can provide immediate relief.")
+            explanations.append("Consider limiting caffeine and creating predictable routines to reduce anxiety triggers.")
         elif anxiety >= 2:
             explanations.append("Moderate anxiety score - try to manage your triggers and seek support if needed.")
+            explanations.append("Breathing exercises practiced daily can help regulate moderate anxiety responses.")
+            explanations.append("Scheduling 'worry time' can contain anxious thoughts to specific periods.")
         else:
             explanations.append("Your anxiety score appears within the normal range.")
+            explanations.append("Maintaining regular relaxation practices can help prevent anxiety buildup.")
+            explanations.append("Being aware of physical tension can help catch early signs of anxiety.")
 
         return {"explanations": explanations}
     except Exception as e:
         logger.error(f"Explanation generation error: {str(e)}")
         return {"explanations": [f"Could not generate explanations: {str(e)}"]}
-    
+
 def home(request):
     if request.method == 'POST':
         form = MentalHealthForm(request.POST)
@@ -418,8 +449,6 @@ def register(request):
 
 
 
-
-
 class blog(View):
     def get(self, request):
         context = {
@@ -456,21 +485,21 @@ class about(View):
             'team_members': [
                 {
                     'name': 'Bhaskar Pal',
-                    'title': 'Team Leader & Ml Lead',
+                    'title': 'Team Lead & ML Model Developer',
                     'bio': 'Leading the team with a vision for mental health innovation.',
-                    'image': 'images/team1.jpg'
+                    'image': 'images/Bhaskar.jpg'
                 },
                 {
                     'name': 'Sreyash Mulate',
-                    'title': 'ML Developer [ 2nd Lead ]',
+                    'title': 'ML Model Developer [ 2nd Lead ]',
                     'bio': 'Develops the AI algorithms that power our personalized recommendations.',
-                    'image': 'images/team2.jpg'
+                    'image': 'images/sreyash.jpg'
                 },
                 {
                     'name': 'Sudip Kumar Patra',
                     'title': 'Backend Intregration',
                     'bio': 'Ensures seamless integration of our AI models into the platform.',
-                    'image': 'images/team3.jpg'
+                    'image': 'images/Sudip.jpg'
                 },
                 {
                     'name': 'Debprasad Manna',
@@ -480,9 +509,9 @@ class about(View):
                 },
                 {
                     'name': 'Debanjan Bhattacharya',
-                    'title': 'ML Developer [ 3rd Lead ]',
+                    'title': 'ML Model Developer [ 3rd Lead ]',
                     'bio': 'Works on the machine learning models that power our platform.',
-                    'image': 'images/team3.jpg'
+                    'image': 'images/Debanjan.jpg'
                 }
             ],
             'core_values': [
