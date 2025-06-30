@@ -2,6 +2,9 @@
 
 ### Detecting Depression, Anxiety, and Stress in Students using Machine Learning
 
+![image](https://github.com/user-attachments/assets/6fc501d9-8914-48b2-9313-2ee279fb7ebc)
+
+
 > Final Year MCA Capstone Project  
 > Department of Computer Science  
 > **Sister Nivedita University**, Kolkata – 2025
@@ -219,13 +222,5 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-## 🙏 Acknowledgments
-
-- **Dr. Rana Majumdar**, Professor, Department of Computer Science, SNU
-- Faculty of SNU for academic support
-- Kaggle community for dataset availability
-- Families and classmates for support and feedback
-
----
 
 > ⚠️ **Disclaimer**: This project is academic research only. It is not a diagnostic tool.
